@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us - ATBI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --dark-bg: #0a0a0a;
+      --card-bg: rgba(255, 255, 255, 0.1);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.8);
+      --text-accent: #4facfe;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--dark-bg);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      line-height: 1.7;
+    }
+
+    /* Navigation Styles */
+    .navbar {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 1200px;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(25px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 50px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar.scrolled {
+      top: 10px;
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 2rem;
+      height: auto;
+    }
+
+    .nav-logo {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .nav-logo::before {
+      content: '◆';
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+    }
+
+    .nav-logo:hover::before {
+      transform: rotate(45deg) scale(1.1);
+    }
+
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      gap: 0.5rem;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.5rem;
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-item {
+      position: relative;
+    }
+
+    .nav-link {
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      padding: 0.7rem 1.2rem;
+      border-radius: 20px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      display: block;
+      opacity: 0.8;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      background: rgba(255, 255, 255, 0.15);
+      color: var(--text-primary);
+      opacity: 1;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .nav-link.active {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+      border-color: rgba(102, 126, 234, 0.3);
+    }
+
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .nav-toggle:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .nav-toggle span {
+      width: 20px;
+      height: 2px;
+      background: var(--text-primary);
+      margin: 2px 0;
+      transition: all 0.3s ease;
+      border-radius: 2px;
+    }
+
+    /* Animated Background */
+    .bg-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: linear-gradient(-45deg, #0a0a0a, #1a1a2e, #16213e, #0f3460);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Header Styles */
+    .hero {
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      padding: 8rem 2rem 4rem;
+    }
+
+    .hero-content {
+      max-width: 1000px;
+      z-index: 2;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 800;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      animation: slideInDown 1s ease-out;
+    }
+
+    .hero .subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+      font-weight: 300;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeInUp 1s ease-out 0.5s both;
+      color: var(--text-secondary);
+    }
+
+    @keyframes slideInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Glass Card Styles */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .glass-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 3rem;
+      margin-bottom: 3rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.8s;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      border-color: rgba(79, 172, 254, 0.5);
+      box-shadow: 0 25px 50px rgba(79, 172, 254, 0.2);
+    }
+
+    .glass-card:hover::before {
+      left: 100%;
+    }
+
+    /* Section Headers */
+    .section-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .section-icon {
+      width: 70px;
+      height: 70px;
+      background: var(--primary-gradient);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin-right: 1.5rem;
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+      animation: pulse-glow 2s infinite;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% {
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+      }
+      50% {
+        box-shadow: 0 15px 40px rgba(102, 126, 234, 0.8);
+      }
+    }
+
+    .section-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Feature Lists */
+    .feature-grid {
+      display: grid;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .feature-item {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--secondary-gradient);
+    }
+
+    .feature-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateX(10px);
+    }
+
+    .feature-title {
+      color: var(--text-accent);
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Two Column Layout */
+    .two-column {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-top: 2rem;
+    }
+
+    .column-content {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .column-content::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100px;
+      height: 100px;
+      background: var(--accent-gradient);
+      border-radius: 50%;
+      transform: translate(50%, -50%);
+      opacity: 0.1;
+    }
+
+    .mission-vision {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .mission-card, .vision-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 2.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
+    }
+
+    .mission-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--primary-gradient);
+      opacity: 0.05;
+      z-index: -1;
+    }
+
+    .vision-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--secondary-gradient);
+      opacity: 0.05;
+      z-index: -1;
+    }
+
+    .mission-card:hover, .vision-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      border-color: rgba(79, 172, 254, 0.5);
+    }
+
+    .card-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .card-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-accent);
+      margin-bottom: 1rem;
+    }
+
+    /* Footer */
+    .footer {
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 4rem 0 2rem;
+      text-align: center;
+      margin-top: 6rem;
+    }
+
+    .footer-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .footer-title {
+      font-size: 2rem;
+      font-weight: 700;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+
+    .footer-text {
+      color: var(--text-secondary);
+      margin: 1rem 0;
+      font-size: 1.1rem;
+    }
+
+    .footer-links {
+      color: var(--text-accent);
+      text-decoration: none;
+      margin: 0 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .footer-links:hover {
+      color: var(--text-primary);
+      text-shadow: 0 0 10px var(--text-accent);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .nav-menu {
+        display: none;
+      }
+      
+      .nav-toggle {
+        display: flex;
+      }
+      
+      .nav-menu.active {
+        display: flex;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.95);
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        margin-top: 1rem;
+        flex-direction: column;
+        gap: 0;
+        padding: 1rem;
+      }
+      
+      .nav-link {
+        padding: 1rem;
+        border-radius: 10px;
+        width: 100%;
+        text-align: center;
+      }
+
+      .container {
+        padding: 0 1rem;
+      }
+
+      .glass-card {
+        padding: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .section-header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .section-icon {
+        margin: 0 0 1rem 0;
+      }
+
+      .two-column {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .mission-vision {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Scroll Reveal Animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 0.8s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">ATBI</a>
+      <ul class="nav-menu" id="nav-menu">
+        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="about.html" class="nav-link active">About Us</a></li>
+        <li class="nav-item"><a href="events.html" class="nav-link">Events</a></li>
+        <li class="nav-item"><a href="success.html" class="nav-link">Success Stories</a></li>
+      </ul>
+      <div class="nav-toggle" id="nav-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="bg-animation"></div>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>About ATBI</h1>
+      <p class="subtitle">Pioneering Innovation & Excellence in Engineering Education</p>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="glass-card reveal">
+      <div class="section-header">
+        <div class="section-icon">🎓</div>
+        <h2 class="section-title">Who We Are</h2>
+      </div>
+      <p style="font-size: 1.2rem; margin-bottom: 2rem; color: var(--text-secondary); line-height: 1.8;">
+        <strong style="color: var(--text-accent);">Andhra Technology Business Incubator (ATBI)</strong> is a premier innovation hub at Narasaraopeta Engineering College, dedicated to transforming ideas into successful ventures. We bridge the gap between academic excellence and entrepreneurial success, fostering a culture of innovation that drives technological advancement and economic growth.
+      </p>
+      
+      <div class="mission-vision">
+        <div class="mission-card">
+          <span class="card-icon">🎯</span>
+          <h3 class="card-title">Our Mission</h3>
+          <p>To nurture and develop innovative minds by providing world-class incubation facilities, mentorship, and resources that transform cutting-edge ideas into sustainable businesses that contribute to societal and economic development.</p>
+        </div>
+        <div class="vision-card">
+          <span class="card-icon">🔮</span>
+          <h3 class="card-title">Our Vision</h3>
+          <p>To be recognized as a leading technology business incubator that creates a thriving ecosystem of entrepreneurs, fostering innovation and excellence in engineering education while contributing to India's startup revolution.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass-card reveal">
+      <div class="section-header">
+        <div class="section-icon">🏆</div>
+        <h2 class="section-title">Recognition & Accreditation</h2>
+      </div>
+      <div class="feature-grid">
+        <div class="feature-item">
+          <div class="feature-title">Ministry of MSME Recognition</div>
+          <p>Officially recognized by the Government of India's Ministry of Micro, Small & Medium Enterprises for our outstanding contribution to entrepreneurship development and innovation ecosystem building across the region.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-title">APSSDC Centre of Excellence</div>
+          <p>Designated as a premier Center of Excellence by the Andhra Pradesh State Skill Development Corporation, acknowledging our exceptional skill development programs and industry-aligned training initiatives.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-title">International Collaborations</div>
+          <p>Strategic partnerships with prestigious global institutions including Stanford University, fostering international research collaborations and academic exchange programs.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass-card reveal">
+      <div class="section-header">
+        <div class="section-icon">🌟</div>
+        <h2 class="section-title">Our Core Values</h2>
+      </div>
+      <div class="two-column">
+        <div class="column-content">
+          <h3 style="color: var(--text-accent); font-size: 1.3rem; margin-bottom: 1rem;">Innovation Excellence</h3>
+          <p style="margin-bottom: 1rem;">We believe in pushing the boundaries of what's possible, encouraging creative thinking and breakthrough solutions.</p>
+          <p><strong>Key Focus:</strong> Cutting-edge research, disruptive technologies, and revolutionary business models.</p>
+        </div>
+        <div class="column-content">
+          <h3 style="color: var(--text-accent); font-size: 1.3rem; margin-bottom: 1rem;">Collaborative Growth</h3>
+          <p style="margin-bottom: 1rem;">Success is achieved through partnerships, mentorship, and building strong networks within the entrepreneurial ecosystem.</p>
+          <p><strong>Key Focus:</strong> Industry partnerships, academic collaborations, and startup community building.</p>
+        </div>
+      </div>
+      <div class="two-column">
+        <div class="column-content">
+          <h3 style="color: var(--text-accent); font-size: 1.3rem; margin-bottom: 1rem;">Sustainable Impact</h3>
+          <p style="margin-bottom: 1rem;">Every innovation should contribute positively to society while creating sustainable economic value.</p>
+          <p><strong>Key Focus:</strong> Social responsibility, environmental consciousness, and long-term value creation.</p>
+        </div>
+        <div class="column-content">
+          <h3 style="color: var(--text-accent); font-size: 1.3rem; margin-bottom: 1rem;">Excellence in Education</h3>
+          <p style="margin-bottom: 1rem;">Integrating entrepreneurial thinking with academic rigor to create well-rounded innovators.</p>
+          <p><strong>Key Focus:</strong> Experiential learning, practical application, and industry readiness.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass-card reveal">
+      <div class="section-header">
+        <div class="section-icon">⚡</div>
+        <h2 class="section-title">Innovation Infrastructure</h2>
+      </div>
+      <div class="feature-grid">
+        <div class="feature-item">
+          <div class="feature-title">State-of-the-Art Labs</div>
+          <p>Cutting-edge research and development facilities equipped with the latest technology for prototyping, testing, and product development across multiple engineering domains.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-title">Co-working Spaces</div>
+          <p>Modern collaborative workspaces designed to foster creativity and team collaboration, providing startups with professional environments to grow their ventures.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-title">Industry 4.0 Center</div>
+          <p>Advanced facilities focusing on artificial intelligence, machine learning, IoT, robotics, and other emerging technologies that define the future of industry.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-title">Digital Innovation Hub</div>
+          <p>Comprehensive digital infrastructure supporting cloud computing, big data analytics, cybersecurity research, and digital transformation initiatives.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass-card reveal">
+      <div class="section-header">
+        <div class="section-icon">🤝</div>
+        <h2 class="section-title">Leadership & Governance</h2>
+      </div>
+      <p style="font-size: 1.1rem; margin-bottom: 2rem; color: var(--text-secondary);">
+        Our leadership team comprises distinguished academics, successful entrepreneurs, and industry veterans who provide strategic guidance and mentorship to our incubated startups.
+      </p>
+      <div class="feature-grid">
+        <div class="feature-item">
+          <div class="feature-title">Academic Leadership</div>
+          <p>Led by renowned faculty members with extensive research experience and publications in top-tier international journals and conferences.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-title">Industry Advisory Board</div>
+          <p>Strategic guidance from successful entrepreneurs, venture capitalists, and industry leaders who bring real-world experience to our ecosystem.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-title">Mentorship Network</div>
+          <p>Extensive network of mentors from diverse backgrounds providing guidance in technology, business development, marketing, and fundraising.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <h3 class="footer-title">Join Our Innovation Journey</h3>
+      <p class="footer-text">Be part of the future of technology and entrepreneurship</p>
+      <p class="footer-text">
+        📧 <a href="mailto:info@atbinec.edu.in" class="footer-links">info@atbinec.edu.in</a> |
+        <a href="https://www.facebook.com/nrtenggcollege" target="_blank" class="footer-links">Facebook</a> |
+        <a href="https://www.instagram.com/nrtec?igsh=dzIyaGcxeDY5c3d5" target="_blank" class="footer-links">Instagram</a> |
+        <a href="https://www.nec-nijmegen.nl/nieuws/nieuws/volg-n.e.c.-op-twitter.htm" target="_blank" class="footer-links">Twitter</a>
+      </p>
+      <p style="margin-top: 2rem; opacity: 0.6; font-size: 0.9rem;">
+        &copy; 2025 Narasaraopeta Engineering College. All rights reserved.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll reveal animation
+    function revealOnScroll() {
+      const reveals = document.querySelectorAll('.reveal');
+      reveals.forEach(reveal => {
+        const windowHeight = window.innerHeight;
+        const elementTop = reveal.getBoundingClientRect().top;
+        const elementVisible = 150;
+        
+        if (elementTop < windowHeight - elementVisible) {
+          reveal.classList.add('active');
+        }
+      });
+    }
+
+    // Navigation functionality
+    function initNavigation() {
+      const navbar = document.getElementById('navbar');
+      const navToggle = document.getElementById('nav-toggle');
+      const navMenu = document.getElementById('nav-menu');
+
+      // Navbar scroll effect
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
+      });
+
+      // Mobile menu toggle
+      navToggle.addEventListener('click', () => {
+        navToggle.classList.toggle('active');
+        navMenu.classList.toggle('active');
+      });
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      revealOnScroll();
+      initNavigation();
+    });
+
+    window.addEventListener('scroll', revealOnScroll);
+  </script>
+</body>
+</html>

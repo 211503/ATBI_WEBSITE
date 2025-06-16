@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ATBI Website</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --dark-bg: #0a0a0a;
+      --card-bg: rgba(255, 255, 255, 0.1);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.8);
+      --text-accent: #4facfe;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--dark-bg);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      line-height: 1.7;
+    }
+
+    /* Alternative Navigation Styles - Minimalist Glass Design */
+.navbar {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 1200px;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.navbar.scrolled {
+  top: 10px;
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 2rem;
+  height: auto;
+}
+
+.nav-logo {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.nav-logo::before {
+  content: '◆';
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.nav-logo:hover::before {
+  transform: rotate(45deg) scale(1.1);
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 0.5rem;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.5rem;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-link {
+  color: var(--text-primary);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding: 0.7rem 1.2rem;
+  border-radius: 20px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  display: block;
+  opacity: 0.8;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--text-primary);
+  opacity: 1;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.nav-link.active {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+  border-color: rgba(102, 126, 234, 0.3);
+}
+
+/* Mobile Menu Toggle */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.nav-toggle:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.nav-toggle span {
+  width: 20px;
+  height: 2px;
+  background: var(--text-primary);
+  margin: 2px 0;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+
+    /* Mobile Menu Toggle */
+    .mobile-menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    .hamburger-line {
+      width: 25px;
+      height: 3px;
+      background: var(--text-primary);
+      margin: 3px 0;
+      transition: all 0.3s ease;
+      border-radius: 2px;
+    }
+
+    .mobile-menu-toggle.active .hamburger-line:nth-child(1) {
+      transform: rotate(45deg) translate(6px, 6px);
+    }
+
+    .mobile-menu-toggle.active .hamburger-line:nth-child(2) {
+      opacity: 0;
+    }
+
+    .mobile-menu-toggle.active .hamburger-line:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    /* Animated Background */
+    .bg-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: linear-gradient(-45deg, #0a0a0a, #1a1a2e, #16213e, #0f3460);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Floating Particles */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--accent-gradient);
+      border-radius: 50%;
+      animation: float-particle 8s infinite linear;
+    }
+
+    @keyframes float-particle {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Header Styles */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      padding: 6rem 2rem 2rem;
+    }
+
+    .hero-content {
+      max-width: 1000px;
+      z-index: 2;
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 800;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      animation: slideInDown 1s ease-out;
+    }
+
+    .hero .subtitle {
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      font-weight: 300;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeInUp 1s ease-out 0.5s both;
+    }
+
+    .hero .description {
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin: 0 auto 3rem;
+      opacity: 0;
+      animation: fadeInUp 1s ease-out 1s both;
+    }
+
+    @keyframes slideInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Glass Card Styles */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .glass-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 3rem;
+      margin-bottom: 3rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.8s;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      border-color: rgba(79, 172, 254, 0.5);
+      box-shadow: 0 25px 50px rgba(79, 172, 254, 0.2);
+    }
+
+    .glass-card:hover::before {
+      left: 100%;
+    }
+
+    /* Section Headers */
+    .section-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .section-icon {
+      width: 70px;
+      height: 70px;
+      background: var(--primary-gradient);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin-right: 1.5rem;
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+      animation: pulse-glow 2s infinite;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% {
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+      }
+      50% {
+        box-shadow: 0 15px 40px rgba(102, 126, 234, 0.8);
+      }
+    }
+
+    .section-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Feature Lists */
+    .feature-grid {
+      display: grid;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .feature-item {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--secondary-gradient);
+    }
+
+    .feature-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateX(10px);
+    }
+
+    .feature-title {
+      color: var(--text-accent);
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Technology Grid */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .tech-item {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      cursor: pointer;
+    }
+
+    .tech-item::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: var(--accent-gradient);
+      border-radius: 50%;
+      transition: all 0.6s ease;
+      transform: translate(-50%, -50%);
+      z-index: -1;
+    }
+
+    .tech-item:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .tech-item:hover {
+      transform: translateY(-15px) rotate(2deg);
+      border-color: rgba(79, 172, 254, 0.8);
+    }
+
+    .tech-emoji {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .tech-name {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    /* Stats Grid */
+    .stats-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+
+    .stat-card {
+      background: var(--primary-gradient);
+      border-radius: 20px;
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transform: perspective(1000px) rotateY(0deg);
+      transition: all 0.5s ease;
+    }
+
+    .stat-card:hover {
+      transform: perspective(1000px) rotateY(10deg) translateY(-10px);
+    }
+
+    .stat-number {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      display: block;
+      text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .stat-label {
+      font-size: 1rem;
+      opacity: 0.9;
+      font-weight: 500;
+    }
+
+    /* Success Stories */
+    .success-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .success-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
+    }
+
+    .success-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100px;
+      height: 100px;
+      background: var(--secondary-gradient);
+      border-radius: 50%;
+      transform: translate(50%, -50%);
+      opacity: 0.1;
+    }
+
+    .success-card:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: scale(1.05);
+    }
+
+    .success-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text-accent);
+      margin-bottom: 1rem;
+    }
+
+    .success-description {
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Innovation Pipeline */
+    .pipeline {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      margin: 3rem 0;
+      flex-wrap: wrap;
+    }
+
+    .pipeline-step {
+      background: var(--accent-gradient);
+      color: var(--dark-bg);
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      position: relative;
+      animation: bounce 2s infinite;
+    }
+
+    .pipeline-step:nth-child(2) { animation-delay: 0.2s; }
+    .pipeline-step:nth-child(3) { animation-delay: 0.4s; }
+    .pipeline-step:nth-child(4) { animation-delay: 0.6s; }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-10px);
+      }
+      60% {
+        transform: translateY(-5px);
+      }
+    }
+
+    .pipeline-arrow {
+      font-size: 2rem;
+      color: var(--text-accent);
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    /* Footer */
+    .footer {
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 4rem 0 2rem;
+      text-align: center;
+      margin-top: 6rem;
+    }
+
+    .footer-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .footer-title {
+      font-size: 2rem;
+      font-weight: 700;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+
+    .footer-text {
+      color: var(--text-secondary);
+      margin: 1rem 0;
+      font-size: 1.1rem;
+    }
+
+    .footer-links {
+      color: var(--text-accent);
+      text-decoration: none;
+      margin: 0 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .footer-links:hover {
+      color: var(--text-primary);
+      text-shadow: 0 0 10px var(--text-accent);
+    }
+
+    /* Section spacing */
+    .section {
+      scroll-margin-top: 100px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .nav-menu {
+        display: none;
+      }
+      
+      .nav-toggle {
+        display: flex;
+      }
+      
+      .nav-menu.active {
+        display: flex;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.95);
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        margin-top: 1rem;
+        flex-direction: column;
+        gap: 0;
+        padding: 1rem;
+      }
+      
+      .nav-link {
+        padding: 1rem;
+        border-radius: 10px;
+        width: 100%;
+        text-align: center;
+      }
+
+      .container {
+        padding: 0 1rem;
+      }
+
+      .glass-card {
+        padding: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .section-header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .section-icon {
+        margin: 0 0 1rem 0;
+      }
+
+      .tech-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .pipeline {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .pipeline-arrow {
+        transform: rotate(90deg);
+      }
+    }
+
+    /* Scroll Reveal Animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 0.8s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">ATBI</a>
+    <ul class="nav-menu" id="nav-menu">
+      <li class="nav-item"><a href="index.html" class="nav-link active">Home</a></li>
+      <li class="nav-item"><a href="about.html" class="nav-link">About Us</a></li>
+      <li class="nav-item"><a href="events.html" class="nav-link">Events</a></li>
+      <li class="nav-item"><a href="success.html" class="nav-link">Success Stories</a></li>
+    </ul>
+    <div class="nav-toggle" id="nav-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+</nav>
+
+  <div class="bg-animation"></div>
+  
+  <div class="particles" id="particles"></div>
+
+  <section class="hero section" id="home">
+    <div class="hero-content">
+      <h1>ATBI</h1>
+      <p class="subtitle">Andhra Technology Business Incubator</p>
+      <p class="description">Pioneering the future of engineering education through innovation, entrepreneurship, and cutting-edge Industry 4.0 technologies</p>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="glass-card reveal section" id="about">
+      <div class="section-header">
+        <div class="section-icon">🏆</div>
+        <h2 class="section-title">Institutional Excellence</h2>
+      </div>
+      <div class="feature-grid">
+        <div class="feature-item">
+          <div class="feature-title">Ministry of MSME Recognition</div>
+          <p>Officially recognized by the Government of India for our outstanding contribution to Micro, Small & Medium Enterprises development and innovation ecosystem</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-title">APSSDC Centre of Excellence</div>
+          <p>Designated as a premier institution by Andhra Pradesh State Skill Development Corporation for exceptional skill development programs</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass-card reveal section" id="success">
+      <div class="section-header">
+        <div class="section-icon">🚀</div>
+        <h2 class="section-title">Innovation Ecosystem</h2>
+      </div>
+      <p style="font-size: 1.2rem; margin-bottom: 2rem; color: var(--text-secondary);">
+        <span style="color: var(--text-accent); font-weight: 600;">Andhra Technology Business Incubator (ATBI)</span> - Transforming ideas into successful ventures
+      </p>
+      
+      <div class="stats-container">
+        <div class="stat-card">
+          <span class="stat-number">12+</span>
+          <span class="stat-label">Startups Incubated</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">100%</span>
+          <span class="stat-label">Success Rate</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">3</span>
+          <span class="stat-label">Major Sectors</span>
+        </div>
+      </div>
+
+      <h3 style="font-size: 1.8rem; color: var(--text-accent); margin: 3rem 0 2rem 0; text-align: center;">Success Stories</h3>
+      <div class="success-grid">
+        <div class="success-card">
+          <div class="success-title">DigiDocTimes</div>
+          <p class="success-description">Revolutionary healthcare documentation platform streamlining medical records and patient management systems</p>
+        </div>
+        <div class="success-card">
+          <div class="success-title">HaasPro</div>
+          <p class="success-description">Next-generation hospitality management solutions enhancing guest experiences and operational efficiency</p>
+        </div>
+        <div class="success-card">
+          <div class="success-title">Book Buddy Shop</div>
+          <p class="success-description">Innovative educational resource platform connecting students with quality learning materials</p>
+        </div>
+      </div>
+
+      <h3 style="font-size: 1.8rem; color: var(--text-accent); margin: 3rem 0 2rem 0; text-align: center;">Innovation Pipeline</h3>
+      <div class="pipeline">
+        <div class="pipeline-step">IDEA</div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-step">PROTOTYPE</div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-step">PITCH</div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-step">INVEST</div>
+      </div>
+    </div>
+
+    <div class="glass-card reveal section" id="events">
+      <div class="section-header">
+        <div class="section-icon">🎯</div>
+        <h2 class="section-title">Signature Events</h2>
+      </div>
+      <div class="feature-grid">
+        <div class="feature-item">
+          <div class="feature-title">Startup NEC E-Weekend</div>
+          <p>Intensive entrepreneurship bootcamp featuring workshops, mentorship sessions, and networking opportunities with industry leaders</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-title">The Founders Conclave</div>
+          <p>National-level symposium bringing together entrepreneurs, investors, and innovators to shape the future of business</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass-card reveal">
+      <div class="section-header">
+        <div class="section-icon">🌍</div>
+        <h2 class="section-title">Global Excellence</h2>
+      </div>
+      <div class="feature-grid">
+        <div class="feature-item">
+          <div class="feature-title">International Partnerships</div>
+          <p>Strategic collaborations with Stanford University and other prestigious global institutions for research and academic exchange</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-title">ICMCCCE 2018</div>
+          <p>International Conference on Mobile Cloud Computing, Communication & Engineering - Advancing technological frontiers</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-title">Research Publications</div>
+          <p>Cutting-edge research published in Scopus, Elsevier, Thomson Reuters, and SCIE indexed journals</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass-card reveal">
+      <div class="section-header">
+        <div class="section-icon">⚡</div>
+        <h2 class="section-title">Industry 4.0 Technologies</h2>
+      </div>
+      <p style="font-size: 1.2rem; margin-bottom: 2rem; color: var(--text-secondary); text-align: center;">
+        Embracing tomorrow's technologies today
+      </p>
+      <div class="tech-grid">
+        <div class="tech-item">
+          <span class="tech-emoji">🤖</span>
+          <div class="tech-name">Artificial Intelligence</div>
+        </div>
+        <div class="tech-item">
+          <span class="tech-emoji">☁️</span>
+          <div class="tech-name">Cloud Computing</div>
+        </div>
+        <div class="tech-item">
+          <span class="tech-emoji">🚀</span>
+          <div class="tech-name">Reusable Rockets</div>
+        </div>
+        <div class="tech-item">
+          <span class="tech-emoji">🚄</span>
+          <div class="tech-name">Hyperloop Systems</div>
+        </div>
+        <div class="tech-item">
+          <span class="tech-emoji">📊</span>
+          <div class="tech-name">Big Data Analytics</div>
+        </div>
+        <div class="tech-item">
+          <span class="tech-emoji">🧠</span>
+          <div class="tech-name">Deep Learning</div>
+        </div>
+        <div class="tech-item">
+          <span class="tech-emoji">⚛️</span>
+          <div class="tech-name">Quantum Computing</div>
+        </div>
+        <div class="tech-item">
+          <span class="tech-emoji">🧬</span>
+          <div class="tech-name">Gene Editing</div>
+        </div>
+        <div class="tech-item">
+          <span class="tech-emoji">🥽</span>
+          <div class="tech-name">Virtual Reality</div>
+        </div>
+        <div class="tech-item">
+          <span class="tech-emoji">🌐</span>
+          <div class="tech-name">Full Stack Development</div>
+        </div>
+        <div class="tech-item">
+          <span class="tech-emoji">💻</span>
+          <div class="tech-name">Java Full Stack Development</div>
+        </div>
+        <div class="tech-item">
+          <span class="tech-emoji">🧑‍💼</span>
+          <div class="tech-name">BPO</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <h3 class="footer-title">Connect with Excellence</h3>
+      <p class="footer-text">Shaping the future of engineering education and innovation</p>
+      <p class="footer-text">
+        📧 <a href="mailto:info@atbinec.edu.in" class="footer-links">info@atbinec.edu.in</a> |
+        <a href="https://www.facebook.com/nrtenggcollege" target="_blank" class="footer-links">Facebook</a> |
+        <a href="https://www.instagram.com/nrtec?igsh=dzIyaGcxeDY5c3d5" target="_blank" class="footer-links">Instagram</a> |
+        <a href="https://www.nec-nijmegen.nl/nieuws/nieuws/volg-n.e.c.-op-twitter.htm" target="_blank" class="footer-links">Twitter</a>
+      </p>
+      <p style="margin-top: 2rem; opacity: 0.6; font-size: 0.9rem;">
+        &copy; 2025 Narasaraopeta Engineering College (NEC) | Andhra Technology Business Incubator (ATBI). All rights reserved.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // Create floating particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 8 + 's';
+        particle.style.animationDuration = (Math.random() * 3 + 5) + 's';
+        particlesContainer.appendChild(particle);
+      }
+    }
+
+    // Scroll reveal animation
+    function revealOnScroll() {
+      const reveals = document.querySelectorAll('.reveal');
+      reveals.forEach(reveal => {
+        const windowHeight = window.innerHeight;
+        const elementTop = reveal.getBoundingClientRect().top;
+        const elementVisible = 150;
+        
+        if (elementTop < windowHeight - elementVisible) {
+          reveal.classList.add('active');
+        }
+      });
+    }
+
+    // Navigation functionality
+    function initNavigation() {
+      const navbar = document.getElementById('navbar');
+      const navLinks = document.querySelectorAll('.nav-link');
+      const navToggle = document.getElementById('nav-toggle');
+      const navMenu = document.getElementById('nav-menu');
+
+      // Navbar scroll effect
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
+      });
+
+      // Mobile menu toggle
+      navToggle.addEventListener('click', () => {
+        navToggle.classList.toggle('active');
+        navMenu.classList.toggle('active');
+      });
+
+      // Smooth scrolling and active link highlighting
+      navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          const href = link.getAttribute('href');
+          
+          // Check if it's an internal anchor link
+          if (href.startsWith('#')) {
+            e.preventDefault();
+            const targetSection = document.querySelector(href);
+            
+            if (targetSection) {
+              const offsetTop = targetSection.offsetTop - 100;
+              window.scrollTo({
+                top: offsetTop,
+                behavior: 'smooth'
+              });
+            }
+
+            // Close mobile menu
+            navMenu.classList.remove('active');
+            navToggle.classList.remove('active');
+
+            // Update active link
+            navLinks.forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+          }
+        });
+      });
+
+      // Highlight active section on scroll
+      window.addEventListener('scroll', () => {
+        const sections = document.querySelectorAll('.section');
+        const scrollPos = window.scrollY + 150;
+
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.offsetHeight;
+          const sectionId = section.getAttribute('id');
+
+          if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+            navLinks.forEach(link => {
+              link.classList.remove('active');
+              if (link.getAttribute('href') === `#${sectionId}`) {
+                link.classList.add('active');
+              }
+            });
+          }
+        });
+      });
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      createParticles();
+      revealOnScroll();
+      initNavigation();
+    });
+
+    window.addEventListener('scroll', revealOnScroll);
+  </script>
+</body>
+</html>

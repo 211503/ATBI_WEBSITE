@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Success Stories - ATBI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --dark-bg: #0a0a0a;
+      --card-bg: rgba(255, 255, 255, 0.1);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.8);
+      --text-accent: #4facfe;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--dark-bg);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      line-height: 1.7;
+    }
+
+    /* Navigation Styles */
+    .navbar {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 1200px;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(25px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 50px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar.scrolled {
+      top: 10px;
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 2rem;
+      height: auto;
+    }
+
+    .nav-logo {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .nav-logo::before {
+      content: '◆';
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+    }
+
+    .nav-logo:hover::before {
+      transform: rotate(45deg) scale(1.1);
+    }
+
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      gap: 0.5rem;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.5rem;
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-item {
+      position: relative;
+    }
+
+    .nav-link {
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      padding: 0.7rem 1.2rem;
+      border-radius: 20px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      display: block;
+      opacity: 0.8;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      background: rgba(255, 255, 255, 0.15);
+      color: var(--text-primary);
+      opacity: 1;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .nav-link.active {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+      border-color: rgba(102, 126, 234, 0.3);
+    }
+
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .nav-toggle:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .nav-toggle span {
+      width: 20px;
+      height: 2px;
+      background: var(--text-primary);
+      margin: 2px 0;
+      transition: all 0.3s ease;
+      border-radius: 2px;
+    }
+
+    /* Animated Background */
+    .bg-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: linear-gradient(-45deg, #0a0a0a, #1a1a2e, #16213e, #0f3460);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Header Styles */
+    .hero {
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      padding: 8rem 2rem 4rem;
+    }
+
+    .hero-content {
+      max-width: 1000px;
+      z-index: 2;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 800;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      animation: slideInDown 1s ease-out;
+    }
+
+    .hero .subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+      font-weight: 300;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeInUp 1s ease-out 0.5s both;
+      color: var(--text-secondary);
+    }
+
+    @keyframes slideInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Glass Card Styles */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .glass-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 3rem;
+      margin-bottom: 3rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.8s;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      border-color: rgba(79, 172, 254, 0.5);
+      box-shadow: 0 25px 50px rgba(79, 172, 254, 0.2);
+    }
+
+    .glass-card:hover::before {
+      left: 100%;
+    }
+
+    /* Section Headers */
+    .section-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .section-icon {
+      width: 70px;
+      height: 70px;
+      background: var(--primary-gradient);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin-right: 1.5rem;
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+      animation: pulse-glow 2s infinite;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% {
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+      }
+      50% {
+        box-shadow: 0 15px 40px rgba(102, 126, 234, 0.8);
+      }
+    }
+
+    .section-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Success Story Cards */
+    .success-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .success-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      cursor: pointer;
+    }
+
+    .success-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--secondary-gradient);
+    }
+
+    .success-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100px;
+      height: 100px;
+      background: var(--accent-gradient);
+      border-radius: 50%;
+      transform: translate(50%, -50%);
+      opacity: 0.1;
+    }
+
+    .success-card:hover {
+      transform: translateY(-15px) scale(1.02);
+      border-color: rgba(79, 172, 254, 0.8);
+      box-shadow: 0 25px 50px rgba(79, 172, 254, 0.3);
+    }
+
+    .success-logo {
+      width: 60px;
+      height: 60px;
+      background: var(--primary-gradient);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    }
+
+    .success-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+
+    .success-tagline {
+      color: var(--text-accent);
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .success-description {
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .success-metrics {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .metric {
+      text-align: center;
+    }
+
+    .metric-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-accent);
+      display: block;
+    }
+
+    .metric-label {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Featured Success Story */
+    .featured-story {
+      background: var(--primary-gradient);
+      border-radius: 30px;
+      padding: 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      margin: 3rem 0;
+    }
+
+    .featured-story::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1.5" fill="white" opacity="0.05"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+      opacity: 0.3;
+    }
+
+    .featured-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .featured-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .featured-subtitle {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      margin-bottom: 2rem;
+    }
+
+    .featured-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .featured-stat {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .featured-stat-number {
+      font-size: 2.5rem;
+      font-weight: 800;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .featured-stat-label {
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    /* Statistics */
+    .stats-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+
+    .stat-card {
+      background: var(--accent-gradient);
+      border-radius: 20px;
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transform: perspective(1000px) rotateY(0deg);
+      transition: all 0.5s ease;
+      color: var(--dark-bg);
+    }
+
+    .stat-card:hover {
+      transform: perspective(1000px) rotateY(10deg) translateY(-10px);
+    }
+
+    .stat-number {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      display: block;
+      text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .stat-label {
+      font-size: 1rem;
+      opacity: 0.9;
+      font-weight: 500;
+    }
+
+    /* Alumni Network */
+    .alumni-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .alumni-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .alumni-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--accent-gradient);
+    }
+
+    .alumni-card:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-10px);
+    }
+
+    .alumni-avatar {
+      width: 80px;
+      height: 80px;
+      background: var(--secondary-gradient);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin: 0 auto 1rem;
+      box-shadow: 0 10px 30px rgba(240, 147, 251, 0.4);
+    }
+
+    .alumni-name {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .alumni-role {
+      color: var(--text-accent);
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .alumni-company {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    /* Footer */
+    .footer {
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 4rem 0 2rem;
+      text-align: center;
+      margin-top: 6rem;
+    }
+
+    .footer-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .footer-title {
+      font-size: 2rem;
+      font-weight: 700;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+
+    .footer-text {
+      color: var(--text-secondary);
+      margin: 1rem 0;
+      font-size: 1.1rem;
+    }
+
+    .footer-links {
+      color: var(--text-accent);
+      text-decoration: none;
+      margin: 0 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .footer-links:hover {
+      color: var(--text-primary);
+      text-shadow: 0 0 10px var(--text-accent);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .nav-menu {
+        display: none;
+      }
+      
+      .nav-toggle {
+        display: flex;
+      }
+      
+      .nav-menu.active {
+        display: flex;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.95);
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        margin-top: 1rem;
+        flex-direction: column;
+        gap: 0;
+        padding: 1rem;
+      }
+      
+      .nav-link {
+        padding: 1rem;
+        border-radius: 10px;
+        width: 100%;
+        text-align: center;
+      }
+
+      .container {
+        padding: 0 1rem;
+      }
+
+      .glass-card {
+        padding: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .section-header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .section-icon {
+        margin: 0 0 1rem 0;
+      }
+
+      .success-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .featured-story {
+        padding: 3rem 2rem;
+      }
+
+      .featured-title {
+        font-size: 2rem;
+      }
+
+      .featured-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+      }
+    }
+
+    /* Scroll Reveal Animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 0.8s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">ATBI</a>
+      <ul class="nav-menu" id="nav-menu">
+        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="about.html" class="nav-link">About Us</a></li>
+        <li class="nav-item"><a href="events.html" class="nav-link">Events</a></li>
+        <li class="nav-item"><a href="success.html" class="nav-link active">Success Stories</a></li>
+      </ul>
+      <div class="nav-toggle" id="nav-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="bg-animation"></div>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Success Stories</h1>
+      <p class="subtitle">Celebrating Innovation, Entrepreneurship & Achievement</p>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="glass-card reveal">
+      <div class="section-header">
+        <div class="section-icon">📊</div>
+        <h2 class="section-title">Impact by Numbers</h2>
+      </div>
+      <div class="stats-container">
+        <div class="stat-card">
+          <span class="stat-number">12+</span>
+          <span class="stat-label">Startups Incubated</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">100%</span>
+          <span class="stat-label">Success Rate</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">₹50Cr+</span>
+          <span class="stat-label">Total Valuation</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">500+</span>
+          <span class="stat-label">Jobs Created</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="featured-story reveal">
+      <div class="featured-content">
+        <h2 class="featured-title">Featured Success Story</h2>
+        <p class="featured-subtitle">From Campus Innovation to Market Leadership</p>
+        <p style="font-size: 1.1rem; opacity: 0.9; max-width: 800px; margin: 0 auto;">
+          DigiDocTimes emerged from our incubation program as a revolutionary healthcare documentation platform, 
+          now serving over 1000+ healthcare facilities across India and transforming patient care through digital innovation.
+        </p>
+        <div class="featured-stats">
+          <div class="featured-stat">
+            <span class="featured-stat-number">1000+</span>
+            <span class="featured-stat-label">Healthcare Facilities</span>
+          </div>
+          <div class="featured-stat">
+            <span class="featured-stat-number">₹15Cr</span>
+            <span class="featured-stat-label">Current Valuation</span>
+          </div>
+          <div class="featured-stat">
+            <span class="featured-stat-number">200+</span>
+            <span class="featured-stat-label">Team Members</span>
+          </div>
+          <div class="featured-stat">
+            <span class="featured-stat-number">5</span>
+            <span class="featured-stat-label">States Covered</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass-card reveal">
+      <div class="section-header">
+        <div class="section-icon">🚀</div>
+        <h2 class="section-title">Startup Success Stories</h2>
+      </div>
+      <div class="success-grid">
+        <div class="success-card">
+          <div class="success-logo">🏥</div>
+          <h3 class="success-title">DigiDocTimes</h3>
+          <div class="success-tagline">Healthcare Technology</div>
+          <p class="success-description">
+            Revolutionary healthcare documentation platform that streamlines medical records and patient management systems. 
+            Serving hospitals, clinics, and healthcare providers with cutting-edge digital solutions.
+          </p>
+          <div class="success-metrics">
+            <div class="metric">
+              <span class="metric-value">1000+</span>
+              <span class="metric-label">Clients</span>
+            </div>
+            <div class="metric">
+              <span class="metric-value">₹15Cr</span>
+              <span class="metric-label">Valuation</span>
+            </div>
+            <div class="metric">
+              <span class="metric-value">200+</span>
+              <span class="metric-label">Employees</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="success-card">
+          <div class="success-logo">🏨</div>
+          <h3 class="success-title">HaasPro</h3>
+          <div class="success-tagline">Hospitality Management</div>
+          <p class="success-description">
+            Next-generation hospitality management solutions that enhance guest experiences and operational efficiency. 
+            Empowering hotels and resorts with smart technology and data-driven insights.
+          </p>
+          <div class="success-metrics">
+            <div class="metric">
+              <span class="metric-value">500+</span>
+              <span class="metric-label">Hotels</span>
+            </div>
+            <div class="metric">
+              <span class="metric-value">₹8Cr</span>
+              <span class="metric-label">Revenue</span>
+            </div>
+            <div class="metric">
+              <span class="metric-value">75+</span>
+              <span class="metric-label">Team Size</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="success-card">
+          <div class="success-logo">📚</div>
+          <h3 class="success-title">Book Buddy Shop</h3>
+          <div class="success-tagline">Educational Technology</div>
+          <p class="success-description">
+            Innovative educational resource platform connecting students with quality learning materials. 
+            Democratizing access to educational content through technology and community-driven solutions.
+          </p>
+          <div class="success-metrics">
+            <div class="metric">
+              <span class="metric-value">50K+</span>
+              <span class="metric-label">Students</span>
+            </div>
+            <div class="metric">
+              <span class="metric-value">₹3Cr</span>
+              <span class="metric-label">Valuation</span>
+            </div>
+            <div class="metric">
+              <span class="metric-value">25+</span>
+              <span class="metric-label">Team Members</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="success-card">
+          <div class="success-logo">💡</div>
+          <h3 class="success-title">TechInnovate Solutions</h3>
+          <div class="success-tagline">AI & Machine Learning</div>
+          <p class="success-description">
+            Cutting-edge AI and machine learning solutions for enterprise clients. Specializing in predictive analytics, 
+            automation, and intelligent decision-making systems across various industries.
+          </p>
+          <div class="success-metrics">
+            <div class="metric">
+              <span class="metric-value">100+</span>
+              <span class="metric-label">Enterprise Clients</span>
+            </div>
+            <div class="metric">
+              <span class="metric-value">₹12Cr</span>
+              <span class="metric-label">Annual Revenue</span>
+            </div>
+            <div class="metric">
+              <span class="metric-value">85+</span>
+              <span class="metric-label">AI Engineers</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="success-card">
+          <div class="success-logo">🌱</div>
+          <h3 class="success-title">GreenTech Innovations</h3>
+          <div class="success-tagline">Sustainable Technology</div>
+          <p class="success-description">
+            Pioneering sustainable technology solutions for environmental challenges. Developing clean energy systems, 
+            waste management solutions, and eco-friendly technologies for a sustainable future.
+          </p>
+          <div class="success-metrics">
+            <div class="metric">
+              <span class="metric-value">200+</span>
+              <span class="metric-label">Installations</span>
+            </div>
+            <div class="metric">
+              <span class="metric-value">₹6Cr</span>
+              <span class="metric-label">Revenue</span>
+            </div>
+            <div class="metric">
+              <span class="metric-value">40+</span>
+              <span class="metric-label">Green Engineers</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="success-card">
+          <div class="success-logo">🚗</div>
+          <h3 class="success-title">AutoMotive AI</h3>
+          <div class="success-tagline">Automotive Technology</div>
+          <p class="success-description">
+            Revolutionary automotive AI solutions for autonomous vehicles and smart transportation systems. 
+            Leading the future of mobility with advanced driver assistance and vehicle intelligence systems.
+          </p>
+          <div class="success-metrics">
+            <div class="metric">
+              <span class="metric-value">50+</span>
+              <span class="metric-label">Auto Partners</span>
+            </div>
+            <div class="metric">
+              <span class="metric-value">₹10Cr</span>
+              <span class="metric-label">Funding Raised</span>
+            </div>
+            <div class="metric">
+              <span class="metric-value">60+</span>
+              <span class="metric-label">Researchers</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass-card reveal">
+      <div class="section-header">
+        <div class="section-icon">🎓</div>
+        <h2 class="section-title">Alumni Achievements</h2>
+      </div>
+      <p style="font-size: 1.1rem; margin-bottom: 2rem; color: var(--text-secondary);">
+        Our alumni continue to make significant contributions to the technology and business world, holding leadership positions in top companies and creating innovative solutions globally.
+      </p>
+      <div class="alumni-grid">
+        <div class="alumni-card">
+          <div class="alumni-avatar">👨‍💼</div>
+          <div class="alumni-name">Rajesh Kumar</div>
+          <div class="alumni-role">CTO & Co-Founder</div>
+          <div class="alumni-company">DigiDocTimes</div>
+        </div>
+        <div class="alumni-card">
+          <div class="alumni-avatar">👩‍💻</div>
+          <div class="alumni-name">Priya Sharma</div>
+          <div class="alumni-role">VP Engineering</div>
+          <div class="alumni-company">Microsoft India</div>
+        </div>
+        <div class="alumni-card">
+          <div class="alumni-avatar">👨‍🔬</div>
+          <div class="alumni-name">Arun Patel</div>
+          <div class="alumni-role">Lead Data Scientist</div>
+          <div class="alumni-company">Google</div>
+        </div>
+        <div class="alumni-card">
+          <div class="alumni-avatar">👩‍🚀</div>
+          <div class="alumni-name">Kavya Reddy</div>
+          <div class="alumni-role">Founder & CEO</div>
+          <div class="alumni-company">GreenTech Innovations</div>
+        </div>
+        <div class="alumni-card">
+          <div class="alumni-avatar">👨‍💼</div>
+          <div class="alumni-name">Vikram Singh</div>
+          <div class="alumni-role">Product Manager</div>
+          <div class="alumni-company">Amazon</div>
+        </div>
+        <div class="alumni-card">
+          <div class="alumni-avatar">👩‍💼</div>
+          <div class="alumni-name">Anitha Gupta</div>
+          <div class="alumni-role">Head of Innovation</div>
+          <div class="alumni-company">Flipkart</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass-card reveal">
+      <div class="section-header">
+        <div class="section-icon">🏆</div>
+        <h2 class="section-title">Awards & Recognition</h2>
+      </div>
+      <div class="success-grid">
+        <div class="success-card">
+          <div class="success-logo">🥇</div>
+          <h3 class="success-title">Best Incubator Award 2024</h3>
+          <div class="success-tagline">Ministry of MSME</div>
+          <p class="success-description">
+            Recognized as the Best Technology Business Incubator in Andhra Pradesh for outstanding contribution to startup ecosystem development and innovation promotion.
+          </p>
+        </div>
+        <div class="success-card">
+          <div class="success-logo">🌟</div>
+          <h3 class="success-title">Excellence in Innovation</h3>
+          <div class="success-tagline">APSSDC</div>
+          <p class="success-description">
+            Awarded for exceptional performance in skill development, entrepreneurship training, and creating successful technology ventures that contribute to economic growth.
+          </p>
+        </div>
+        <div class="success-card">
+          <div class="success-logo">🚀</div>
+          <h3 class="success-title">Startup Ecosystem Builder</h3>
+          <div class="success-tagline">Government of India</div>
+          <p class="success-description">
+            Honored for building a thriving startup ecosystem that has successfully launched multiple high-impact ventures and created significant employment opportunities.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <h3 class="footer-title">Join Our Success Story</h3>
+      <p class="footer-text">Be the next success story to emerge from ATBI</p>
+      <p class="footer-text">
+        📧 <a href="mailto:info@atbinec.edu.in" class="footer-links">info@atbinec.edu.in</a> |
+        <a href="https://www.facebook.com/nrtenggcollege" target="_blank" class="footer-links">Facebook</a> |
+        <a href="https://www.instagram.com/nrtec?igsh=dzIyaGcxeDY5c3d5" target="_blank" class="footer-links">Instagram</a> |
+        <a href="https://www.nec-nijmegen.nl/nieuws/nieuws/volg-n.e.c.-op-twitter.htm" target="_blank" class="footer-links">Twitter</a>
+      </p>
+      <p style="margin-top: 2rem; opacity: 0.6; font-size: 0.9rem;">
+        &copy; 2025 Narasaraopeta Engineering College. All rights reserved.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll reveal animation
+    function revealOnScroll() {
+      const reveals = document.querySelectorAll('.reveal');
+      reveals.forEach(reveal => {
+        const windowHeight = window.innerHeight;
+        const elementTop = reveal.getBoundingClientRect().top;
+        const elementVisible = 150;
+        
+        if (elementTop < windowHeight - elementVisible) {
+          reveal.classList.add('active');
+        }
+      });
+    }
+
+    // Navigation functionality
+    function initNavigation() {
+      const navbar = document.getElementById('navbar');
+      const navToggle = document.getElementById('nav-toggle');
+      const navMenu = document.getElementById('nav-menu');
+
+      // Navbar scroll effect
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
+      });
+
+      // Mobile menu toggle
+      navToggle.addEventListener('click', () => {
+        navToggle.classList.toggle('active');
+        navMenu.classList.toggle('active');
+      });
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      revealOnScroll();
+      initNavigation();
+    });
+
+    window.addEventListener('scroll', revealOnScroll);
+  </script>
+</body>
+</html>

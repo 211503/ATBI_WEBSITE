@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Events - ATBI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --dark-bg: #0a0a0a;
+      --card-bg: rgba(255, 255, 255, 0.1);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.8);
+      --text-accent: #4facfe;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--dark-bg);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      line-height: 1.7;
+    }
+
+    /* Navigation Styles */
+    .navbar {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 1200px;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(25px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 50px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar.scrolled {
+      top: 10px;
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 2rem;
+      height: auto;
+    }
+
+    .nav-logo {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .nav-logo::before {
+      content: '◆';
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+    }
+
+    .nav-logo:hover::before {
+      transform: rotate(45deg) scale(1.1);
+    }
+
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      gap: 0.5rem;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.5rem;
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-item {
+      position: relative;
+    }
+
+    .nav-link {
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      padding: 0.7rem 1.2rem;
+      border-radius: 20px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      display: block;
+      opacity: 0.8;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      background: rgba(255, 255, 255, 0.15);
+      color: var(--text-primary);
+      opacity: 1;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .nav-link.active {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+      border-color: rgba(102, 126, 234, 0.3);
+    }
+
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .nav-toggle:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .nav-toggle span {
+      width: 20px;
+      height: 2px;
+      background: var(--text-primary);
+      margin: 2px 0;
+      transition: all 0.3s ease;
+      border-radius: 2px;
+    }
+
+    /* Animated Background */
+    .bg-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: linear-gradient(-45deg, #0a0a0a, #1a1a2e, #16213e, #0f3460);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Header Styles */
+    .hero {
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      padding: 8rem 2rem 4rem;
+    }
+
+    .hero-content {
+      max-width: 1000px;
+      z-index: 2;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 800;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      animation: slideInDown 1s ease-out;
+    }
+
+    .hero .subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+      font-weight: 300;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeInUp 1s ease-out 0.5s both;
+      color: var(--text-secondary);
+    }
+
+    @keyframes slideInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Glass Card Styles */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .glass-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 3rem;
+      margin-bottom: 3rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.8s;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      border-color: rgba(79, 172, 254, 0.5);
+      box-shadow: 0 25px 50px rgba(79, 172, 254, 0.2);
+    }
+
+    .glass-card:hover::before {
+      left: 100%;
+    }
+
+    /* Section Headers */
+    .section-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .section-icon {
+      width: 70px;
+      height: 70px;
+      background: var(--primary-gradient);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin-right: 1.5rem;
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+      animation: pulse-glow 2s infinite;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% {
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+      }
+      50% {
+        box-shadow: 0 15px 40px rgba(102, 126, 234, 0.8);
+      }
+    }
+
+    .section-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Event Cards */
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .event-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      cursor: pointer;
+    }
+
+    .event-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--secondary-gradient);
+    }
+
+    .event-card:hover {
+      transform: translateY(-15px) scale(1.02);
+      border-color: rgba(79, 172, 254, 0.8);
+      box-shadow: 0 25px 50px rgba(79, 172, 254, 0.3);
+    }
+
+    .event-date {
+      display: inline-block;
+      background: var(--accent-gradient);
+      color: var(--dark-bg);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .event-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+
+    .event-description {
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .event-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .event-detail {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-accent);
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    /* Upcoming Events Timeline */
+    .timeline {
+      position: relative;
+      margin: 3rem 0;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--primary-gradient);
+      transform: translateX(-50%);
+    }
+
+    .timeline-item {
+      display: flex;
+      justify-content: flex-end;
+      padding-right: 2rem;
+      position: relative;
+      margin: 2rem 0;
+      width: 50%;
+    }
+
+    .timeline-item:nth-child(even) {
+      align-self: flex-end;
+      justify-content: flex-start;
+      padding-left: 2rem;
+      padding-right: 0;
+      margin-left: 50%;
+    }
+
+    .timeline-content {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border);
+      border-radius: 15px;
+      padding: 2rem;
+      position: relative;
+      max-width: 400px;
+      transition: all 0.3s ease;
+    }
+
+    .timeline-content:hover {
+      transform: scale(1.05);
+      border-color: rgba(79, 172, 254, 0.5);
+    }
+
+    .timeline-date {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--accent-gradient);
+      color: var(--dark-bg);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.8rem;
+      white-space: nowrap;
+    }
+
+    .timeline-item:nth-child(even) .timeline-date {
+      left: -50%;
+      transform: translate(-50%, -50%);
+    }
+
+    /* Past Events Archive */
+    .archive-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .archive-item {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .archive-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--secondary-gradient);
+    }
+
+    .archive-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateX(10px);
+    }
+
+    .archive-year {
+      color: var(--text-accent);
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .archive-title {
+      color: var(--text-primary);
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Statistics */
+    .stats-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+
+    .stat-card {
+      background: var(--primary-gradient);
+      border-radius: 20px;
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transform: perspective(1000px) rotateY(0deg);
+      transition: all 0.5s ease;
+    }
+
+    .stat-card:hover {
+      transform: perspective(1000px) rotateY(10deg) translateY(-10px);
+    }
+
+    .stat-number {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      display: block;
+      text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .stat-label {
+      font-size: 1rem;
+      opacity: 0.9;
+      font-weight: 500;
+    }
+
+    /* Footer */
+    .footer {
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 4rem 0 2rem;
+      text-align: center;
+      margin-top: 6rem;
+    }
+
+    .footer-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .footer-title {
+      font-size: 2rem;
+      font-weight: 700;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+
+    .footer-text {
+      color: var(--text-secondary);
+      margin: 1rem 0;
+      font-size: 1.1rem;
+    }
+
+    .footer-links {
+      color: var(--text-accent);
+      text-decoration: none;
+      margin: 0 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .footer-links:hover {
+      color: var(--text-primary);
+      text-shadow: 0 0 10px var(--text-accent);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .nav-menu {
+        display: none;
+      }
+      
+      .nav-toggle {
+        display: flex;
+      }
+      
+      .nav-menu.active {
+        display: flex;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.95);
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        margin-top: 1rem;
+        flex-direction: column;
+        gap: 0;
+        padding: 1rem;
+      }
+      
+      .nav-link {
+        padding: 1rem;
+        border-radius: 10px;
+        width: 100%;
+        text-align: center;
+      }
+
+      .container {
+        padding: 0 1rem;
+      }
+
+      .glass-card {
+        padding: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .section-header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .section-icon {
+        margin: 0 0 1rem 0;
+      }
+
+      .events-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .timeline::before {
+        left: 2rem;
+      }
+
+      .timeline-item {
+        width: 100%;
+        padding-left: 4rem;
+        padding-right: 0;
+        margin-left: 0;
+      }
+
+      .timeline-item:nth-child(even) {
+        margin-left: 0;
+        padding-left: 4rem;
+        padding-right: 0;
+      }
+
+      .timeline-date {
+        left: 0;
+        transform: translateY(-50%);
+      }
+
+      .timeline-item:nth-child(even) .timeline-date {
+        left: 0;
+        transform: translateY(-50%);
+      }
+    }
+
+    /* Scroll Reveal Animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 0.8s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">ATBI</a>
+      <ul class="nav-menu" id="nav-menu">
+        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="about.html" class="nav-link">About Us</a></li>
+        <li class="nav-item"><a href="events.html" class="nav-link active">Events</a></li>
+        <li class="nav-item"><a href="success.html" class="nav-link">Success Stories</a></li>
+      </ul>
+      <div class="nav-toggle" id="nav-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="bg-animation"></div>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Events & Programs</h1>
+      <p class="subtitle">Transforming Ideas into Reality Through Innovation Events</p>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="glass-card reveal">
+      <div class="section-header">
+        <div class="section-icon">📊</div>
+        <h2 class="section-title">Event Impact</h2>
+      </div>
+      <div class="stats-container">
+        <div class="stat-card">
+          <span class="stat-number">50+</span>
+          <span class="stat-label">Events Organized</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">5000+</span>
+          <span class="stat-label">Participants</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">100+</span>
+          <span class="stat-label">Industry Partners</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">25+</span>
+          <span class="stat-label">Countries Reached</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass-card reveal">
+      <div class="section-header">
+        <div class="section-icon">🎯</div>
+        <h2 class="section-title">Signature Events</h2>
+      </div>
+      <div class="events-grid">
+        <div class="event-card">
+          <div class="event-date">Annual Event</div>
+          <h3 class="event-title">Startup NEC E-Weekend</h3>
+          <p class="event-description">
+            An intensive 3-day entrepreneurship bootcamp featuring workshops, mentorship sessions, pitch competitions, and networking opportunities with industry leaders and successful entrepreneurs.
+          </p>
+          <div class="event-details">
+            <div class="event-detail">
+              <span>🏆</span>
+              <span>Pitch Competition</span>
+            </div>
+            <div class="event-detail">
+              <span>🎓</span>
+              <span>Workshops</span>
+            </div>
+            <div class="event-detail">
+              <span>🤝</span>
+              <span>Networking</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-date">Bi-Annual</div>
+          <h3 class="event-title">The Founders Conclave</h3>
+          <p class="event-description">
+            National-level symposium bringing together entrepreneurs, investors, and innovators to discuss the future of business, share insights, and foster collaborations across industries.
+          </p>
+          <div class="event-details">
+            <div class="event-detail">
+              <span>💼</span>
+              <span>Investor Meetings</span>
+            </div>
+            <div class="event-detail">
+              <span>🗣️</span>
+              <span>Keynote Sessions</span>
+            </div>
+            <div class="event-detail">
+              <span>🌐</span>
+              <span>Panel Discussions</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-date">Ongoing</div>
+          <h3 class="event-title">Innovation Challenges</h3>
+          <p class="event-description">
+            Monthly hackathons and innovation challenges focused on solving real-world problems using cutting-edge technologies like AI, IoT, blockchain, and sustainable solutions.
+          </p>
+          <div class="event-details">
+            <div class="event-detail">
+              <span>💡</span>
+              <span>Problem Solving</span>
+            </div>
+            <div class="event-detail">
+              <span>⚡</span>
+              <span>48-Hour Sprints</span>
+            </div>
+            <div class="event-detail">
+              <span>🏅</span>
+              <span>Cash Prizes</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-date">Quarterly</div>
+          <h3 class="event-title">Industry Connect Series</h3>
+          <p class="event-description">
+            Exclusive sessions with industry veterans, successful entrepreneurs, and thought leaders sharing insights on market trends, business strategies, and emerging opportunities.
+          </p>
+          <div class="event-details">
+            <div class="event-detail">
+              <span>🎤</span>
+              <span>Expert Talks</span>
+            </div>
+            <div class="event-detail">
+              <span>📈</span>
+              <span>Market Insights</span>
+            </div>
+            <div class="event-detail">
+              <span>🔗</span>
+              <span>Industry Partnerships</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass-card reveal">
+      <div class="section-header">
+        <div class="section-icon">📅</div>
+        <h2 class="section-title">Upcoming Events 2025</h2>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-date">March 2025</div>
+            <h4 style="color: var(--text-accent); margin-bottom: 0.5rem;">AI Innovation Summit</h4>
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">Exploring the future of artificial intelligence in business and society with leading AI researchers and practitioners.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-date">April 2025</div>
+            <h4 style="color: var(--text-accent); margin-bottom: 0.5rem;">Startup Pitch Fest</h4>
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">Early-stage startups present their ideas to a panel of investors and industry experts for funding opportunities.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-date">May 2025</div>
+            <h4 style="color: var(--text-accent); margin-bottom: 0.5rem;">Global Innovation Conference</h4>
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">International conference featuring speakers from Stanford, MIT, and other prestigious institutions sharing cutting-edge research.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-date">June 2025</div>
+            <h4 style="color: var(--text-accent); margin-bottom: 0.5rem;">Sustainability Hackathon</h4>
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">48-hour intensive hackathon focused on developing sustainable solutions for environmental challenges.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass-card reveal">
+      <div class="section-header">
+        <div class="section-icon">🏛️</div>
+        <h2 class="section-title">Academic Conferences</h2>
+      </div>
+      <div class="events-grid">
+        <div class="event-card">
+          <div class="event-date">2018</div>
+          <h3 class="event-title">ICMCCCE 2018</h3>
+          <p class="event-description">
+            International Conference on Mobile Cloud Computing, Communication & Engineering brought together researchers and practitioners to advance technological frontiers in mobile and cloud computing.
+          </p>
+          <div class="event-details">
+            <div class="event-detail">
+              <span>📚</span>
+              <span>Research Papers</span>
+            </div>
+            <div class="event-detail">
+              <span>🌍</span>
+              <span>International Speakers</span>
+            </div>
+            <div class="event-detail">
+              <span>🔬</span>
+              <span>Technical Sessions</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-date">Upcoming</div>
+          <h3 class="event-title">ICAI 2025</h3>
+          <p class="event-description">
+            International Conference on Artificial Intelligence focusing on the latest developments in machine learning, deep learning, and AI applications across various domains.
+          </p>
+          <div class="event-details">
+            <div class="event-detail">
+              <span>🤖</span>
+              <span>AI Research</span>
+            </div>
+            <div class="event-detail">
+              <span>📊</span>
+              <span>Data Science</span>
+            </div>
+            <div class="event-detail">
+              <span>💻</span>
+              <span>Tech Demos</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass-card reveal">
+      <div class="section-header">
+        <div class="section-icon">📖</div>
+        <h2 class="section-title">Past Events Archive</h2>
+      </div>
+      <div class="archive-grid">
+        <div class="archive-item">
+          <div class="archive-year">2024</div>
+          <div class="archive-title">Blockchain Revolution Summit</div>
+          <p style="color: var(--text-secondary); font-size: 0.9rem;">Explored decentralized technologies and their impact on future business models.</p>
+        </div>
+        <div class="archive-item">
+          <div class="archive-year">2024</div>
+          <div class="archive-title">Women in Tech Leadership</div>
+          <p style="color: var(--text-secondary); font-size: 0.9rem;">Celebrating and promoting women leaders in technology and entrepreneurship.</p>
+        </div>
+        <div class="archive-item">
+          <div class="archive-year">2023</div>
+          <div class="archive-title">Industry 4.0 Transformation</div>
+          <p style="color: var(--text-secondary); font-size: 0.9rem;">Showcasing advanced manufacturing technologies and digital transformation strategies.</p>
+        </div>
+        <div class="archive-item">
+          <div class="archive-year">2023</div>
+          <div class="archive-title">Green Technology Expo</div>
+          <p style="color: var(--text-secondary); font-size: 0.9rem;">Highlighting sustainable technologies and environmental innovation solutions.</p>
+        </div>
+        <div class="archive-item">
+          <div class="archive-year">2022</div>
+          <div class="archive-title">FinTech Innovation Day</div>
+          <p style="color: var(--text-secondary); font-size: 0.9rem;">Exploring financial technology trends and digital payment solutions.</p>
+        </div>
+        <div class="archive-item">
+          <div class="archive-year">2022</div>
+          <div class="archive-title">Healthcare Technology Summit</div>
+          <p style="color: var(--text-secondary); font-size: 0.9rem;">Advancing healthcare through technology, telemedicine, and digital health solutions.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <h3 class="footer-title">Join Our Next Event</h3>
+      <p class="footer-text">Be part of the innovation ecosystem that's shaping the future</p>
+      <p class="footer-text">
+        📧 <a href="mailto:info@atbinec.edu.in" class="footer-links">info@atbinec.edu.in</a> |
+        <a href="https://www.facebook.com/nrtenggcollege" target="_blank" class="footer-links">Facebook</a> |
+        <a href="https://www.instagram.com/nrtec?igsh=dzIyaGcxeDY5c3d5" target="_blank" class="footer-links">Instagram</a> |
+        <a href="https://www.nec-nijmegen.nl/nieuws/nieuws/volg-n.e.c.-op-twitter.htm" target="_blank" class="footer-links">Twitter</a>
+      </p>
+      <p style="margin-top: 2rem; opacity: 0.6; font-size: 0.9rem;">
+        &copy; 2025 Narasaraopeta Engineering College. All rights reserved.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll reveal animation
+    function revealOnScroll() {
+      const reveals = document.querySelectorAll('.reveal');
+      reveals.forEach(reveal => {
+        const windowHeight = window.innerHeight;
+        const elementTop = reveal.getBoundingClientRect().top;
+        const elementVisible = 150;
+        
+        if (elementTop < windowHeight - elementVisible) {
+          reveal.classList.add('active');
+        }
+      });
+    }
+
+    // Navigation functionality
+    function initNavigation() {
+      const navbar = document.getElementById('navbar');
+      const navToggle = document.getElementById('nav-toggle');
+      const navMenu = document.getElementById('nav-menu');
+
+      // Navbar scroll effect
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
+      });
+
+      // Mobile menu toggle
+      navToggle.addEventListener('click', () => {
+        navToggle.classList.toggle('active');
+        navMenu.classList.toggle('active');
+      });
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      revealOnScroll();
+      initNavigation();
+    });
+
+    window.addEventListener('scroll', revealOnScroll);
+  </script>
+</body>
+</html>
