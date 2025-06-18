@@ -536,62 +536,86 @@
     }
 
     .alumni-card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      padding: 2rem;
-      text-align: center;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
+  width: 240px;
+  padding: 1.5rem;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: none;
+}
 
-    .alumni-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 3px;
-      background: var(--accent-gradient);
-    }
+.alumni-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
 
-    .alumni-card:hover {
-      background: rgba(255, 255, 255, 0.1);
-      transform: translateY(-10px);
-    }
+.alumni-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4);
+}
 
-    .alumni-avatar {
-      width: 80px;
-      height: 80px;
-      background: var(--secondary-gradient);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      margin: 0 auto 1rem;
-      box-shadow: 0 10px 30px rgba(240, 147, 251, 0.4);
-    }
+.alumni-card:hover::before {
+  opacity: 1;
+}
 
-    .alumni-name {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 0.5rem;
-    }
+.alumni-avatar {
+  position: relative;
+  margin-bottom: 1.25rem;
+}
 
-    .alumni-role {
-      color: var(--text-accent);
-      font-weight: 600;
-      font-size: 0.9rem;
-      margin-bottom: 1rem;
-    }
+.alumni-avatar img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
 
-    .alumni-company {
-      color: var(--text-secondary);
-      font-size: 0.9rem;
-    }
+.alumni-card:hover .alumni-avatar img {
+  border-color: rgba(255, 255, 255, 0.8);
+  transform: scale(1.05);
+}
+
+.alumni-name {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.alumni-role {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.alumni-company {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 400;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  display: inline-block;
+  margin-top: 0.5rem;
+  backdrop-filter: blur(10px);
+}
 
     /* Footer */
     .footer {
@@ -963,39 +987,52 @@
       </p>
       <div class="alumni-grid">
         <div class="alumni-card">
-          <div class="alumni-avatar">👨‍💼</div>
-          <div class="alumni-name">Rajesh Kumar</div>
-          <div class="alumni-role">CTO & Co-Founder</div>
-          <div class="alumni-company">DigiDocTimes</div>
-        </div>
+      <div class="alumni-avatar">
+    <img src="Rajesh.png" alt="Rajesh Kumar" />
+  </div>
+  <div class="alumni-name">Rajesh Kumar</div>
+  <div class="alumni-role">CTO & Co-Founder</div>
+  <div class="alumni-company">DigiDocTimes</div>
+</div>
+
         <div class="alumni-card">
-          <div class="alumni-avatar">👩‍💻</div>
+          <div class="alumni-avatar">
+            <img src="priya.png" alt="Priya Sharma" />
+          </div>
           <div class="alumni-name">Priya Sharma</div>
           <div class="alumni-role">VP Engineering</div>
           <div class="alumni-company">Microsoft India</div>
         </div>
         <div class="alumni-card">
-          <div class="alumni-avatar">👨‍🔬</div>
+          <div class="alumni-avatar">
+          <img src="Arunn.png" alt="Arun Patel" />
+          </div>
           <div class="alumni-name">Arun Patel</div>
           <div class="alumni-role">Lead Data Scientist</div>
           <div class="alumni-company">Google</div>
         </div>
         <div class="alumni-card">
-          <div class="alumni-avatar">👩‍🚀</div>
+          <div class="alumni-avatar">
+          <img src="kavya.png" alt="Kavya Reddy" />
+          </div>
           <div class="alumni-name">Kavya Reddy</div>
           <div class="alumni-role">Founder & CEO</div>
           <div class="alumni-company">GreenTech Innovations</div>
         </div>
         <div class="alumni-card">
-          <div class="alumni-avatar">👨‍💼</div>
+          <div class="alumni-avatar">
+          <img src="vikram.png" alt="Vikram Singh" />
+          </div>
           <div class="alumni-name">Vikram Singh</div>
-          <div class="alumni-role">Product Manager</div>
+          <div class="alumni-role">Software Engineer</div>
           <div class="alumni-company">Amazon</div>
         </div>
         <div class="alumni-card">
-          <div class="alumni-avatar">👩‍💼</div>
-          <div class="alumni-name">Anitha Gupta</div>
-          <div class="alumni-role">Head of Innovation</div>
+          <div class="alumni-avatar">
+          <img src="Hemant.png" alt="Hemant Badri" />
+          </div>
+          <div class="alumni-name">Hemant Badri</div>
+          <div class="alumni-role">Senior Vice President, Head of Supply Chain</div>
           <div class="alumni-company">Flipkart</div>
         </div>
       </div>
